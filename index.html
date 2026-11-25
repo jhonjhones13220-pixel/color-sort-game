@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101426">
+  <title>COLOR SORT</title>
+
+  <link rel="stylesheet" href="src/css/style.css">
+  <link rel="stylesheet" href="src/css/animations.css">
+  <link rel="stylesheet" href="src/css/auth.css">
+  <link rel="stylesheet" href="src/css/profile.css">
+  <link rel="stylesheet" href="src/css/ranking.css">
+  <link rel="stylesheet" href="src/css/challenges.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">◉</span>
+        <span>COLOR<span class="brand-light">SORT</span></span>
+      </div>
+      <div class="coins">
+        <span>🪙</span>
+        <strong id="coin-count">500</strong>
+        <button id="add-coins" aria-label="Adicionar moedas">+</button>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <span class="eyebrow">PUZZLE • STRATEGY • CHALLENGE</span>
+      <h1>Seu cérebro.<br><span>Seu próximo desafio.</span></h1>
+      <p>Organize as cores. Supere seus limites.</p>
+    </section>
+
+    <section class="level-card">
+      <div class="level-info">
+        <span>SEU PROGRESSO</span>
+        <strong>FASE <b id="level-number">01</b></strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label">
+        <span id="progress-text">0% concluído</span>
+        <span>100 fases iniciais</span>
+      </div>
+    </section>
+
+    <section class="puzzle-preview">
+      <div class="preview-heading">
+        <div>
+          <span class="eyebrow">PREPARE-SE</span>
+          <h2>Vamos jogar?</h2>
+        </div>
+        <span class="difficulty">FÁCIL</span>
+      </div>
+
+      <div class="tubes" id="preview-tubes">
+        <div class="tube">
+          <div class="liquid blue"></div>
+          <div class="liquid pink"></div>
+          <div class="liquid yellow"></div>
+          <div class="liquid purple"></div>
+        </div>
+        <div class="tube">
+          <div class="liquid pink"></div>
+          <div class="liquid blue"></div>
+          <div class="liquid purple"></div>
+          <div class="liquid yellow"></div>
+        </div>
+        <div class="tube">
+          <div class="liquid yellow"></div>
+          <div class="liquid purple"></div>
+          <div class="liquid blue"></div>
+          <div class="liquid pink"></div>
+        </div>
+        <div class="tube">
+          <div class="liquid purple"></div>
+          <div class="liquid yellow"></div>
+          <div class="liquid pink"></div>
+          <div class="liquid blue"></div>
+        </div>
+        <div class="tube empty-tube"></div>
+      </div>
+      <p class="preview-hint">Separe todas as cores para vencer!</p>
+    </section>
+
+    <button class="play-button" id="play-button">
+      <span>JOGAR AGORA</span>
+      <span>→</span>
+    </button>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-page="home">
+        <span>⌂</span>Início
+      </button>
+      <button class="nav-item" data-page="ranking">
+        <span>🏆</span>Ranking
+      </button>
+      <button class="nav-item" data-page="challenges">
+        <span>⚡</span>Desafios
+      </button>
+      <button class="nav-item" data-page="profile">
+        <span>♙</span>Perfil
+      </button>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="src/js/supabase.js"></script>
+  <script src="src/js/auth.js"></script>
+  <script src="src/js/auth-ui.js"></script>
+
+  <script src="src/js/levels.js"></script>
+  <script src="src/js/game.js"></script>
+  <script src="src/js/storage.js"></script>
+  <script src="src/js/challenges.js"></script>
+  <script src="src/js/scoring.js"></script>
+
+  <script src="src/js/profile.js"></script>
+  <script src="src/js/ranking.js"></script>
+
+  <script src="src/js/app.js"></script>
+</body>
+</html>

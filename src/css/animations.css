@@ -1,0 +1,249 @@
+
+@keyframes liquidWave {
+  0%, 100% {
+    border-radius: 5px 5px 3px 3px;
+  }
+  50% {
+    border-radius: 9px 9px 3px 3px;
+  }
+}
+
+@keyframes tubeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+@keyframes entrance {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes selectedTube {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.puzzle-preview { animation: entrance .7s ease both; }
+.level-card { animation: entrance .5s ease both; }
+.welcome { animation: entrance .4s ease both; }
+
+.tube { animation: tubeFloat 3s ease-in-out infinite; }
+.tube:nth-child(2) { animation-delay: .2s; }
+.tube:nth-child(3) { animation-delay: .4s; }
+.tube:nth-child(4) { animation-delay: .6s; }
+
+.liquid { animation: liquidWave 3s ease-in-out infinite; }
+
+.play-button { animation: glowPulse 3s ease-in-out infinite; }
+
+.tube.selected {
+  animation: none;
+  transform: translateY(-10px);
+  border-color: #fff;
+  box-shadow: 0 0 18px rgba(66,201,255,.5);
+}
+
+.liquid.pouring { animation: none; }
+
+/* TELA DA PARTIDA */
+
+#game-screen {
+  animation: entrance .4s ease both;
+  padding-bottom: 35px;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0 25px;
+}
+
+.game-header button {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #252e49;
+  color: white;
+  font-size: 25px;
+}
+
+.game-header div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.game-header div span {
+  color: #929bb5;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.game-header div strong {
+  font-size: 20px;
+  color: #42c9ff;
+}
+
+.game-status {
+  text-align: center;
+  margin: 20px 0 35px;
+}
+
+.game-status h2 {
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.game-status p {
+  font-size: 12px;
+  color: #929bb5;
+  margin-top: 7px;
+}
+
+.game-board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 35px 17px;
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 15px 0;
+  overflow: visible;
+}
+
+.game-tube {
+  width: 53px;
+  height: 155px;
+  padding: 5px 4px;
+  cursor: pointer;
+  animation: none !important;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.game-tube:hover {
+  border-color: #42c9ff;
+}
+
+.game-tube.selected {
+  transform: translateY(-10px);
+  border-color: #fff;
+  box-shadow: 0 0 18px rgba(66,201,255,.5);
+}
+
+.game-tube .liquid {
+  height: 25%;
+  min-height: 0;
+  animation: none;
+}
+
+.game-tube.pouring {
+  z-index: 20;
+  transform: rotate(22deg) translateY(-8px);
+  transform-origin: 50% 12%;
+}
+
+.game-tube.receiving {
+  box-shadow: 0 0 15px rgba(66,201,255,.35);
+}
+
+.game-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.game-actions button {
+  flex: 1;
+  background: #252e49;
+  color: white;
+  padding: 14px 8px;
+  border-radius: 13px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid #394563;
+}
+
+.game-actions button:active {
+  transform: scale(.97);
+}
+
+.game-score {
+  margin-top: 25px;
+  text-align: center;
+  color: #929bb5;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.game-score strong {
+  display: block;
+  color: #ffd34e;
+  font-size: 25px;
+  margin-top: 5px;
+}
+
+.game-message {
+  text-align: center;
+  font-size: 12px;
+  color: #42c9ff;
+  margin-top: 18px;
+  min-height: 20px;
+}
+
+.result-card {
+  margin-top: 25px;
+  padding: 25px 18px;
+  text-align: center;
+  border-radius: 22px;
+  border: 1px solid #465476;
+  background: linear-gradient(145deg, #293858, #1b233d);
+  animation: entrance .4s ease both;
+}
+
+.result-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.result-card h2 {
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.result-card p {
+  color: #aeb8d0;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.result-card > strong {
+  display: block;
+  color: #ffd34e;
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+.result-card button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 13px;
+  background: linear-gradient(100deg, #ff478e, #ff6c70);
+  color: white;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+@media (max-width: 360px) {
+  .game-board { gap: 25px 12px; }
+  .game-tube { width: 48px; height: 140px; }
+}
