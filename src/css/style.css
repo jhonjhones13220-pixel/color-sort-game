@@ -1,130 +1,239 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap');
 
 :root {
-  --bg: #101426;
-  --surface: #191f35;
-  --surface-light: #222a43;
-  --text: #ffffff;
-  --muted: #929bb5;
-  --pink: #ff4f91;
-  --blue: #42c9ff;
-  --yellow: #ffd34e;
-  --purple: #a879ff;
-  --green: #4ce0ad;
+  --bg: #0b1021;
+  --bg-deep: #070b18;
+  --surface: #151d36;
+  --surface-light: #1e2849;
+  --surface-elevated: #232f55;
+  --glass-border: rgba(164, 198, 255, 0.16);
+  --glass-highlight: rgba(255, 255, 255, 0.14);
+  --text: #f8fbff;
+  --muted: #93a1c6;
+  --pink: #ff4b8f;
+  --blue: #38c8ff;
+  --yellow: #ffd24a;
+  --purple: #a272ff;
+  --green: #3ce0a8;
+  --orange: #ff8533;
+  --shadow-card: 0 18px 40px rgba(4, 7, 18, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background:
-    radial-gradient(ellipse at 50% -10%, #303c70 0%, transparent 55%),
-    var(--bg);
+    radial-gradient(ellipse 85% 45% at 50% -6%, rgba(62, 118, 224, 0.28) 0%, transparent 65%),
+    radial-gradient(circle at 85% 22%, rgba(162, 114, 255, 0.12) 0%, transparent 42%),
+    linear-gradient(180deg, #0d142b 0%, var(--bg) 55%, var(--bg-deep) 100%);
   color: var(--text);
   font-family: 'Nunito', sans-serif;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 }
 
 button {
   font-family: inherit;
   cursor: pointer;
   border: none;
+  color: inherit;
 }
 
 .game-shell {
   width: 100%;
   max-width: 480px;
   min-height: 100vh;
-  padding: 25px 22px 105px;
+  min-height: 100dvh;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 20px calc(114px + env(safe-area-inset-bottom, 0px));
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
+
+/* ===================================
+   TOPBAR & MOEDAS
+=================================== */
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
+  font-family: 'Outfit', 'Nunito', sans-serif;
   font-size: 20px;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 .brand-icon {
-  color: var(--blue);
-  font-size: 27px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #ffffff;
+  background: linear-gradient(145deg, #38c8ff 0%, #6d7cff 55%, #ff4b8f 100%);
+  box-shadow:
+    0 6px 16px rgba(56, 200, 255, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55);
 }
 
 .brand-light {
   color: var(--blue);
+  margin-left: 2px;
 }
 
 .coins {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--surface);
-  border: 1px solid #343d5b;
-  padding: 8px 11px;
-  border-radius: 30px;
+  background: linear-gradient(160deg, rgba(35, 47, 85, 0.92), rgba(18, 25, 48, 0.95));
+  border: 1px solid rgba(154, 188, 255, 0.22);
+  padding: 6px 8px 6px 12px;
+  border-radius: 16px;
   font-size: 14px;
+  box-shadow:
+    0 8px 20px rgba(4, 8, 20, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.coins strong {
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
 }
 
 .coins button {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--yellow);
-  color: #252033;
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffe270 0%, #f5b418 100%);
+  color: #2b1d04;
+  font-size: 16px;
   font-weight: 900;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 3px 0 #b87c07,
+    0 4px 10px rgba(255, 210, 74, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.coins button:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #b87c07,
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ===================================
+   HERO / MASCOTE NA HOME
+=================================== */
+
 .welcome {
-  margin-top: 42px;
+  margin-top: 16px;
+}
+
+.home-mascot-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-mascot-stage {
+  position: relative;
+  width: 214px;
+  height: 138px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 6px 14px 4px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(56, 200, 255, 0.22) 0%, rgba(162, 114, 255, 0.1) 46%, transparent 74%),
+    linear-gradient(180deg, rgba(28, 41, 80, 0.42) 0%, rgba(14, 21, 45, 0.78) 100%);
+  border: 1px solid rgba(154, 196, 255, 0.18);
+  box-shadow:
+    0 14px 30px rgba(4, 7, 18, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.home-mascot-stage::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(56, 200, 255, 0.15), rgba(130, 195, 255, 0.42), rgba(162, 114, 255, 0.18));
+  box-shadow: 0 2px 10px rgba(56, 200, 255, 0.25);
+  z-index: 0;
+}
+
+.home-mascot-stage .scientist-svg {
+  width: 158px;
+  height: 132px;
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
+  display: inline-block;
+  font-family: 'Outfit', 'Nunito', sans-serif;
   font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 2px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
   color: var(--blue);
+  text-shadow: 0 0 14px rgba(56, 200, 255, 0.35);
 }
 
-.welcome h1 {
-  margin-top: 12px;
-  font-size: clamp(31px, 8vw, 39px);
-  line-height: 1.12;
-  font-weight: 900;
-  letter-spacing: -1px;
-}
-
-.welcome h1 span {
-  color: var(--pink);
-}
-
-.welcome p {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 12px;
-}
+/* ===================================
+   PROGRESS CARD
+=================================== */
 
 .level-card {
-  margin-top: 28px;
-  background: linear-gradient(120deg, #222d4b, #1a2036);
-  border: 1px solid #343d5b;
-  padding: 18px;
-  border-radius: 20px;
+  margin-top: 18px;
+  background: linear-gradient(155deg, rgba(35, 47, 85, 0.95) 0%, rgba(18, 25, 48, 0.98) 100%);
+  border: 1px solid var(--glass-border);
+  padding: 18px 18px 16px;
+  border-radius: 22px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.level-card::before,
+.puzzle-preview::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(164, 218, 255, 0.42), transparent);
+  pointer-events: none;
 }
 
 .level-info {
@@ -136,51 +245,75 @@ button {
 .level-info span {
   color: var(--muted);
   font-size: 10px;
-  letter-spacing: 1.5px;
-  font-weight: 800;
+  letter-spacing: 1.8px;
+  font-weight: 900;
 }
 
 .level-info strong {
-  font-size: 13px;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
   color: var(--yellow);
+  background: rgba(255, 210, 74, 0.1);
+  border: 1px solid rgba(255, 210, 74, 0.25);
+  padding: 5px 11px;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .level-info strong b {
-  font-size: 20px;
-  margin-left: 5px;
+  font-size: 17px;
+  margin-left: 4px;
+  font-variant-numeric: tabular-nums;
 }
 
 .progress-track {
-  height: 8px;
-  background: #101629;
+  height: 11px;
+  background: #0a1022;
   border-radius: 20px;
   overflow: hidden;
   margin-top: 14px;
+  padding: 2px;
+  border: 1px solid rgba(130, 165, 235, 0.15);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.65);
 }
 
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--blue), var(--purple));
+  background: linear-gradient(90deg, #38c8ff 0%, #7d74ff 55%, #ff4b8f 100%);
   border-radius: 20px;
-  transition: width 0.5s ease;
+  box-shadow:
+    0 0 12px rgba(56, 200, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .progress-label {
   display: flex;
   justify-content: space-between;
-  margin-top: 9px;
+  margin-top: 10px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
 
+/* ===================================
+   VITRINE DOS TUBOS 3D (HOME)
+=================================== */
+
 .puzzle-preview {
-  margin-top: 28px;
-  padding: 20px 15px;
-  background: linear-gradient(145deg, #1b233d, #171d31);
-  border: 1px solid #343d5b;
-  border-radius: 22px;
+  margin-top: 20px;
+  padding: 20px 16px 18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(56, 200, 255, 0.12) 0%, transparent 55%),
+    linear-gradient(160deg, rgba(30, 41, 74, 0.96) 0%, rgba(18, 25, 48, 0.98) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
 }
 
 .preview-heading {
@@ -190,121 +323,348 @@ button {
 }
 
 .preview-heading h2 {
+  font-family: 'Outfit', 'Nunito', sans-serif;
   font-size: 21px;
-  margin-top: 4px;
+  margin-top: 3px;
   font-weight: 900;
 }
 
 .difficulty {
-  background: rgba(76, 224, 173, 0.12);
+  background: rgba(60, 224, 168, 0.14);
+  border: 1px solid rgba(60, 224, 168, 0.35);
   color: var(--green);
-  padding: 6px 11px;
-  border-radius: 20px;
+  padding: 6px 12px;
+  border-radius: 12px;
   font-size: 10px;
   font-weight: 900;
+  letter-spacing: 1px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .tubes {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 10px;
-  margin-top: 32px;
-  min-height: 120px;
-}
-
-.tube {
-  width: 43px;
-  height: 116px;
-  padding: 5px 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  border: 2px solid rgba(210, 228, 255, 0.65);
-  border-top: none;
-  border-radius: 0 0 17px 17px;
-  background: rgba(255, 255, 255, 0.035);
-  box-shadow: inset 3px 0 7px rgba(255,255,255,0.06);
-  overflow: hidden;
+  gap: 11px;
+  margin-top: 30px;
+  padding: 12px 6px 16px;
+  min-height: 136px;
   position: relative;
 }
 
+/* Bancada sutil na base da vitrine */
+.tubes::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 4px;
+  height: 12px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(56, 200, 255, 0.16) 0%, rgba(7, 11, 24, 0.65) 75%);
+  border-top: 1px solid rgba(164, 204, 255, 0.14);
+  pointer-events: none;
+}
+
+/* ===================================
+   TUBOS DE VIDRO 3D
+=================================== */
+
+.tube {
+  width: 44px;
+  height: 118px;
+  padding: 10px 4px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1px;
+  border: 1.5px solid rgba(198, 228, 255, 0.45);
+  border-top: none;
+  border-radius: 3px 3px 21px 21px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(220, 240, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.04) 22%,
+      rgba(12, 20, 44, 0.18) 54%,
+      rgba(255, 255, 255, 0.05) 86%,
+      rgba(180, 220, 255, 0.18) 100%
+    );
+  box-shadow:
+    0 12px 18px rgba(4, 7, 18, 0.55),
+    inset 4px 0 7px rgba(255, 255, 255, 0.12),
+    inset -4px 0 8px rgba(6, 11, 26, 0.55),
+    inset 0 -7px 12px rgba(175, 222, 255, 0.14);
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+/* Bocal / anel de vidro 3D no topo */
+.tube::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -4px;
+  right: -4px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(210, 234, 255, 0.58);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(160, 205, 255, 0.14) 52%,
+      rgba(18, 28, 56, 0.45) 100%
+    );
+  box-shadow:
+    0 3px 6px rgba(4, 8, 20, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Reflexo especular vertical cilíndrico */
 .tube::after {
   content: "";
   position: absolute;
   left: 5px;
-  top: 8px;
-  height: 75%;
-  width: 3px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.25);
+  top: 10px;
+  bottom: 14px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.18) 60%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   pointer-events: none;
-}
-
-.liquid {
-  height: 25%;
-  width: 100%;
-  flex-shrink: 0;
-  border-radius: 5px;
-}
-
-.blue {
-  background: linear-gradient(100deg, #24a9ff, #69ddff);
-  box-shadow: 0 0 10px rgba(66,201,255,0.35);
-}
-
-.pink {
-  background: linear-gradient(100deg, #ed347c, #ff83b4);
-  box-shadow: 0 0 10px rgba(255,79,145,0.3);
-}
-
-.yellow {
-  background: linear-gradient(100deg, #e8a927, #ffe77b);
-  box-shadow: 0 0 10px rgba(255,211,78,0.3);
-}
-
-.purple {
-  background: linear-gradient(100deg, #8951e9, #c29bff);
-  box-shadow: 0 0 10px rgba(168,121,255,0.3);
+  z-index: 3;
 }
 
 .empty-tube {
-  border-style: dashed;
-  border-color: rgba(255,255,255,0.3);
+  border-color: rgba(180, 214, 255, 0.28);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(200, 230, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.02) 30%,
+      rgba(8, 14, 34, 0.12) 70%,
+      rgba(180, 220, 255, 0.1) 100%
+    );
+}
+
+/* ===================================
+   LÍQUIDOS VOLUMÉTRICOS
+=================================== */
+
+.liquid {
+  height: calc((100% - 3px) / 4);
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 5px rgba(4, 9, 24, 0.34);
+}
+
+/* Camada do topo com menisco luminoso */
+.tube > .liquid:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/* Camada do fundo acompanhando o arredondamento do tubo */
+.tube > .liquid:last-child {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+/* Reflexo cilíndrico interno de volume no líquido */
+.liquid::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 16%;
+  width: 22%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+/* Menisco brilhante no topo da camada superior */
+.tube > .liquid:first-child::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 4%;
+  right: 4%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+}
+
+.blue,
+.liquid.blue {
+  background: linear-gradient(
+    90deg,
+    #1183d6 0%,
+    #36c4ff 32%,
+    #7ae2ff 54%,
+    #1da4f2 82%,
+    #0e6bb8 100%
+  );
+  box-shadow:
+    0 0 12px rgba(56, 200, 255, 0.38),
+    inset 0 2px 3px rgba(255, 255, 255, 0.42),
+    inset 0 -3px 5px rgba(5, 36, 77, 0.42);
+}
+
+.pink,
+.liquid.pink {
+  background: linear-gradient(
+    90deg,
+    #c21b60 0%,
+    #ff458e 32%,
+    #ff88b8 54%,
+    #ed2b78 82%,
+    #9e124c 100%
+  );
+  box-shadow:
+    0 0 12px rgba(255, 75, 143, 0.36),
+    inset 0 2px 3px rgba(255, 255, 255, 0.42),
+    inset 0 -3px 5px rgba(74, 8, 36, 0.42);
+}
+
+.yellow,
+.liquid.yellow {
+  background: linear-gradient(
+    90deg,
+    #c9850c 0%,
+    #ffca3a 32%,
+    #ffeb8a 54%,
+    #f2b31d 82%,
+    #a86c05 100%
+  );
+  box-shadow:
+    0 0 12px rgba(255, 210, 74, 0.36),
+    inset 0 2px 3px rgba(255, 255, 255, 0.48),
+    inset 0 -3px 5px rgba(84, 48, 2, 0.38);
+}
+
+.purple,
+.liquid.purple {
+  background: linear-gradient(
+    90deg,
+    #6632c9 0%,
+    #9c6cff 32%,
+    #c7a8ff 54%,
+    #834ef0 82%,
+    #5224a8 100%
+  );
+  box-shadow:
+    0 0 12px rgba(162, 114, 255, 0.38),
+    inset 0 2px 3px rgba(255, 255, 255, 0.42),
+    inset 0 -3px 5px rgba(36, 12, 82, 0.45);
+}
+
+.green,
+.liquid.green {
+  background: linear-gradient(
+    90deg,
+    #0e9968 0%,
+    #2ed69b 32%,
+    #7af2c7 54%,
+    #1db882 82%,
+    #097851 100%
+  );
+  box-shadow:
+    0 0 12px rgba(60, 224, 168, 0.38),
+    inset 0 2px 3px rgba(255, 255, 255, 0.44),
+    inset 0 -3px 5px rgba(5, 58, 38, 0.4);
+}
+
+.orange,
+.liquid.orange {
+  background: linear-gradient(
+    90deg,
+    #cc4806 0%,
+    #ff7926 32%,
+    #ffb470 54%,
+    #f06414 82%,
+    #a63703 100%
+  );
+  box-shadow:
+    0 0 12px rgba(255, 133, 51, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.46),
+    inset 0 -3px 5px rgba(82, 26, 2, 0.42);
 }
 
 .preview-hint {
   text-align: center;
   color: var(--muted);
   font-size: 12px;
-  margin-top: 20px;
+  font-weight: 700;
+  margin-top: 12px;
 }
+
+/* ===================================
+   BOTÃO PRINCIPAL TÁTIL 3D
+=================================== */
 
 .play-button {
   width: 100%;
   margin-top: 22px;
   padding: 18px 22px;
-  border-radius: 16px;
-  background: linear-gradient(100deg, #ff478e, #ff6c70);
-  color: white;
-  font-size: 15px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ff5d9e 0%, #ff3b7f 55%, #e82b6e 100%);
+  color: #ffffff;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-size: 16px;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 8px 25px rgba(255, 71, 142, 0.25);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow:
+    0 6px 0 #a8154c,
+    0 14px 30px rgba(255, 59, 127, 0.36),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.48);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
 .play-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(255, 71, 142, 0.35);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 0 #a8154c,
+    0 18px 34px rgba(255, 59, 127, 0.44),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.52);
+}
+
+.play-button:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 #a8154c,
+    0 6px 14px rgba(255, 59, 127, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .play-button span:last-child {
-  font-size: 23px;
+  font-size: 22px;
 }
+
+/* ===================================
+   BARRA DE NAVEGAÇÃO INFERIOR
+=================================== */
 
 .bottom-nav {
   position: fixed;
@@ -315,30 +675,69 @@ button {
   max-width: 480px;
   display: flex;
   justify-content: space-around;
-  padding: 13px 5px 20px;
-  background: rgba(20, 26, 46, 0.96);
-  backdrop-filter: blur(15px);
-  border-top: 1px solid #303954;
-  z-index: 10;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(16, 24, 48, 0.95) 0%, rgba(10, 15, 32, 0.98) 100%);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(154, 188, 255, 0.2);
+  box-shadow:
+    0 -12px 32px rgba(4, 7, 18, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  z-index: 950;
 }
 
 .nav-item {
+  position: relative;
+  flex: 1;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 8px;
+  border-radius: 15px;
   color: var(--muted);
   background: transparent;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 800;
+  letter-spacing: 0.35px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
 .nav-item span {
   font-size: 20px;
+  line-height: 1.1;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-item.active {
-  color: var(--blue);
+  color: #63dcff;
+  background: linear-gradient(180deg, rgba(56, 200, 255, 0.16) 0%, rgba(56, 200, 255, 0.06) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(128, 224, 255, 0.28),
+    0 4px 14px rgba(56, 200, 255, 0.14);
+}
+
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 26%;
+  right: 26%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38c8ff, #8c7bff);
+  box-shadow: 0 0 10px rgba(56, 200, 255, 0.8);
+}
+
+.nav-item.active span {
+  transform: translateY(-1px) scale(1.08);
+}
+
+.nav-item:active {
+  transform: scale(0.94);
 }
 
 @media (max-width: 360px) {
@@ -347,17 +746,59 @@ button {
     padding-right: 14px;
   }
 
+  .home-mascot-stage {
+    width: 188px;
+    height: 120px;
+  }
+
+  .home-mascot-stage .scientist-svg {
+    width: 138px;
+    height: 116px;
+  }
+
   .tubes {
-    gap: 6px;
+    gap: 7px;
   }
 
   .tube {
     width: 39px;
+    height: 108px;
+  }
+
+  .nav-item {
+    padding: 5px 4px;
+    font-size: 9.5px;
+  }
+
+  .nav-item span {
+    font-size: 18px;
   }
 }
-.liquid.green {
-  background: linear-gradient(100deg, #20bd83, #75f0bd);
-  box-shadow:
-    0 0 10px rgba(76, 224, 173, 0.45),
-    inset 0 2px 5px rgba(255, 255, 255, 0.3);
+
+@media (max-height: 700px) {
+  .welcome {
+    margin-top: 12px;
+  }
+
+  .home-mascot-stage {
+    width: 192px;
+    height: 118px;
+  }
+
+  .home-mascot-stage .scientist-svg {
+    width: 136px;
+    height: 114px;
+  }
+
+  .level-card {
+    margin-top: 14px;
+  }
+
+  .puzzle-preview {
+    margin-top: 14px;
+  }
+
+  .play-button {
+    margin-top: 16px;
+  }
 }

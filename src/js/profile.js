@@ -29,7 +29,10 @@ const Profile = {
       <div class="profile-container">
 
         <header class="profile-header">
-          <h2>Meu perfil</h2>
+          <div>
+            <span class="profile-eyebrow">LABORATÓRIO • PERFIL</span>
+            <h2>Meu perfil</h2>
+          </div>
           <button class="profile-close" id="profile-close">×</button>
         </header>
 
@@ -94,24 +97,26 @@ const Profile = {
               >
             </div>
 
-            <div class="profile-form-field">
-              <label for="profile-state">Estado</label>
-              <input
-                id="profile-state"
-                type="text"
-                maxlength="80"
-                placeholder="Seu estado"
-              >
-            </div>
+            <div class="profile-form-row">
+              <div class="profile-form-field">
+                <label for="profile-state">Estado</label>
+                <input
+                  id="profile-state"
+                  type="text"
+                  maxlength="80"
+                  placeholder="Seu estado"
+                >
+              </div>
 
-            <div class="profile-form-field">
-              <label for="profile-country">País</label>
-              <input
-                id="profile-country"
-                type="text"
-                maxlength="80"
-                placeholder="Seu país"
-              >
+              <div class="profile-form-field">
+                <label for="profile-country">País</label>
+                <input
+                  id="profile-country"
+                  type="text"
+                  maxlength="80"
+                  placeholder="Seu país"
+                >
+              </div>
             </div>
 
             <button class="profile-save" id="profile-save" type="submit">
@@ -139,7 +144,12 @@ const Profile = {
 
   bindEvents() {
     this.screen.querySelector('#profile-close')
-      .addEventListener('click', () => this.hide());
+      .addEventListener('click', () => {
+        this.hide();
+        if (typeof window.syncActiveNavFromScreens === 'function') {
+          window.syncActiveNavFromScreens();
+        }
+      });
 
     this.screen.querySelector('#profile-form')
       .addEventListener('submit', (event) => {

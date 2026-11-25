@@ -139,7 +139,7 @@ const Ranking = {
           <div class="podium-place ${place.className} empty">
             <div class="podium-avatar">?</div>
             <strong>Aguardando</strong>
-            <span>${place.medal}</span>
+            <span class="podium-medal">${place.medal}</span>
             <div class="podium-base">${place.position}º</div>
           </div>
         `;
@@ -152,7 +152,7 @@ const Ranking = {
       const isMe = player.user_id === Auth.user.id;
 
       return `
-        <div class="podium-place ${place.className}">
+        <div class="podium-place ${place.className} ${isMe ? "podium-is-me" : ""}">
           <div class="podium-avatar">
             ${this.escapeHTML(name.charAt(0).toUpperCase())}
           </div>
@@ -299,7 +299,12 @@ const Ranking = {
     screen.classList.add("active");
 
     screen.querySelector("#ranking-close")
-      .addEventListener("click", () => this.hide());
+      .addEventListener("click", () => {
+        this.hide();
+        if (typeof window.syncActiveNavFromScreens === "function") {
+          window.syncActiveNavFromScreens();
+        }
+      });
 
     screen.querySelector("#ranking-refresh")
       .addEventListener("click", () => this.show());

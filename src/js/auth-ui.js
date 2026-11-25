@@ -27,7 +27,8 @@ const AuthUI = {
       <div class="auth-container">
 
         <div class="auth-brand">
-          <div class="auth-logo">CS</div>
+          <div class="auth-logo">${window.Game && typeof Game.getScientistHTML === 'function' ? Game.getScientistHTML('auth-sci') : 'CS'}</div>
+          <span class="auth-eyebrow">LABORATÓRIO • ACESSO</span>
           <h1>COLOR SORT</h1>
           <p>Organize as cores. Supere seus limites.</p>
         </div>
@@ -211,6 +212,9 @@ const AuthUI = {
     this.screen.querySelector('#auth-guest-button')
       .addEventListener('click', () => {
         this.hide();
+        if (typeof window.syncActiveNavFromScreens === 'function') {
+          window.syncActiveNavFromScreens();
+        }
       });
   },
 

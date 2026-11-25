@@ -141,7 +141,7 @@ function showChallenges() {
 
     <div class="challenge-section-divider"></div>
 
-    <div class="challenge-summary-card">
+    <div class="challenge-summary-card challenge-balance-card">
       <span>SEU SALDO ATUAL</span>
       <strong>🪙 ${Number(data.coins || 0).toLocaleString("pt-BR")}</strong>
     </div>
@@ -168,23 +168,70 @@ function hideChallenges() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+function syncHomeProgress() {
   const data = Storage.load();
 
-  document.getElementById("coin-count").textContent =
-    Number(data.coins || 0);
+  const coinCount = document.getElementById("coin-count");
+  const levelNumber = document.getElementById("level-number");
+  const progressText = document.getElementById("progress-text");
+  const progressFill = document.getElementById("progress-fill");
 
-  document.getElementById("level-number").textContent =
-    String(data.level || 1).padStart(2, "0");
+  if (coinCount) {
+    coinCount.textContent = Number(data.coins || 0);
+  }
 
-  document.getElementById("progress-text").textContent =
-    `${data.completedLevels || 0} fases concluídas`;
+  if (levelNumber) {
+    levelNumber.textContent = String(data.level || 1).padStart(2, "0");
+  }
 
-  document.getElementById("progress-fill").style.width =
-    `${Math.min(data.completedLevels || 0, 100)}%`;
+  if (progressText) {
+    progressText.textContent = `${data.completedLevels || 0} fases concluídas`;
+  }
+
+  if (progressFill) {
+    progressFill.style.width = `${Math.min(data.completedLevels || 0, 100)}%`;
+  }
+
+  return data;
+}
+
+function setActiveNav(page) {
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.toggle("active", item.dataset.page === page);
+  });
+}
+
+function syncActiveNavFromScreens() {
+  const profileActive = document.getElementById("profile-screen")?.classList.contains("active");
+  const rankingActive = document.getElementById("ranking-screen")?.classList.contains("active");
+  const challengesScreen = document.getElementById("challenges-screen");
+  const challengesActive = challengesScreen && challengesScreen.style.display !== "none" && challengesScreen.style.display !== "";
+
+  if (profileActive) {
+    setActiveNav("profile");
+  } else if (rankingActive) {
+    setActiveNav("ranking");
+  } else if (challengesActive) {
+    setActiveNav("challenges");
+  } else {
+    setActiveNav("home");
+  }
+}
+
+window.setActiveNav = setActiveNav;
+window.syncActiveNavFromScreens = syncActiveNavFromScreens;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  syncHomeProgress();
+
+  const homeMascot = document.getElementById("home-mascot");
+  if (homeMascot && window.Game && typeof Game.getScientistHTML === "function") {
+    homeMascot.innerHTML = Game.getScientistHTML("home-sci");
+  }
 
   document.getElementById("play-button").addEventListener("click", () => {
-    Game.start(data.level || 1);
+    const current = Storage.load();
+    Game.start(current.level || 1);
   });
 
   document.getElementById("add-coins").addEventListener("click", () => {
@@ -199,16 +246,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     button.addEventListener("click", async () => {
       const page = button.dataset.page;
 
-      document.querySelectorAll(".nav-item").forEach(item => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
+      setActiveNav(page);
 
       if (page === "home") {
         hideChallenges();
         Profile.hide();
         Ranking.hide();
+        syncHomeProgress();
         return;
       }
 
@@ -216,6 +260,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         hideChallenges();
         Ranking.hide();
         await Profile.open();
+        syncActiveNavFromScreens();
         return;
       }
 
@@ -223,6 +268,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         hideChallenges();
         Profile.hide();
         await Ranking.show();
+        syncActiveNavFromScreens();
         return;
       }
 

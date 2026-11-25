@@ -1,111 +1,455 @@
+/* ===================================
+   ANIMAÇÕES GERAIS E TELA DE PARTIDA
+=================================== */
 
 @keyframes liquidWave {
   0%, 100% {
-    border-radius: 5px 5px 3px 3px;
+    transform: scaleY(1);
   }
   50% {
-    border-radius: 9px 9px 3px 3px;
+    transform: scaleY(1.03);
   }
 }
 
 @keyframes tubeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 @keyframes glowPulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.2); }
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.08);
+  }
 }
 
 @keyframes entrance {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-@keyframes selectedTube {
-  from { transform: translateY(0); }
-  to { transform: translateY(-10px); }
+@keyframes fadeInScreen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.puzzle-preview { animation: entrance .7s ease both; }
-.level-card { animation: entrance .5s ease both; }
-.welcome { animation: entrance .4s ease both; }
+@keyframes scientistBreathe {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
 
-.tube { animation: tubeFloat 3s ease-in-out infinite; }
-.tube:nth-child(2) { animation-delay: .2s; }
-.tube:nth-child(3) { animation-delay: .4s; }
-.tube:nth-child(4) { animation-delay: .6s; }
+@keyframes scientistHeadTilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
 
-.liquid { animation: liquidWave 3s ease-in-out infinite; }
+@keyframes scientistArmStir {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
 
-.play-button { animation: glowPulse 3s ease-in-out infinite; }
+@keyframes scientistBlink {
+  0%, 44%, 48%, 92%, 96%, 100% {
+    transform: scaleY(1);
+  }
+  46%, 94% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes flaskBubble {
+  0% {
+    transform: translateY(6px) scale(0.7);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-24px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes flaskLiquidPulse {
+  0%, 100% {
+    opacity: 0.88;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes resultBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes resultAppear {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.welcome {
+  animation: entrance 0.4s ease both;
+}
+
+.level-card {
+  animation: entrance 0.5s ease both;
+}
+
+.puzzle-preview {
+  animation: entrance 0.65s ease both;
+}
+
+.tube {
+  animation: tubeFloat 3.4s ease-in-out infinite;
+}
+
+.tube:nth-child(2) { animation-delay: 0.22s; }
+.tube:nth-child(3) { animation-delay: 0.44s; }
+.tube:nth-child(4) { animation-delay: 0.66s; }
+.tube:nth-child(5) { animation-delay: 0.88s; }
+
+.tube > .liquid:first-child {
+  transform-origin: 50% 100%;
+  animation: liquidWave 3.2s ease-in-out infinite;
+}
+
+.play-button {
+  animation: glowPulse 3.2s ease-in-out infinite;
+}
 
 .tube.selected {
   animation: none;
   transform: translateY(-10px);
-  border-color: #fff;
-  box-shadow: 0 0 18px rgba(66,201,255,.5);
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 18px 26px rgba(4, 8, 22, 0.65),
+    0 0 22px rgba(56, 200, 255, 0.55),
+    inset 4px 0 8px rgba(255, 255, 255, 0.18);
 }
 
-.liquid.pouring { animation: none; }
+.liquid.pouring {
+  animation: none;
+}
 
-/* TELA DA PARTIDA */
+/* ===================================
+   TELA DA PARTIDA (#game-screen)
+=================================== */
 
 #game-screen {
-  animation: entrance .4s ease both;
-  padding-bottom: 35px;
+  animation: fadeInScreen 0.3s ease;
+  padding-bottom: 24px;
+  position: relative;
+}
+
+/* ===================================
+   CENÁRIO LABORATÓRIO 3D CARTOON
+   (Camada independente, sem bloquear cliques)
+=================================== */
+
+.lab-backdrop {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+.lab-room-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .game-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 0 25px;
+  padding: 2px 0 12px;
+  position: relative;
+  z-index: 5;
 }
 
 .game-header button {
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
-  background: #252e49;
-  color: white;
-  font-size: 25px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #27345c, #18213d);
+  border: 1px solid rgba(164, 198, 255, 0.24);
+  color: #ffffff;
+  font-size: 21px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 0 #0d1326,
+    0 8px 18px rgba(4, 7, 18, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.game-header button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #0d1326;
 }
 
 .game-header div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
+  padding: 6px 14px;
+  border-radius: 14px;
+  background: rgba(16, 24, 48, 0.82);
+  border: 1px solid rgba(154, 188, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .game-header div span {
-  color: #929bb5;
+  color: #93a1c6;
   font-size: 9px;
   font-weight: 900;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.6px;
 }
 
 .game-header div strong {
-  font-size: 20px;
-  color: #42c9ff;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: #38c8ff;
+}
+
+/* Barra de vidas e moedas (migrada de installStyles) */
+.game-resource-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.game-resource {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 14px;
+  background: linear-gradient(155deg, rgba(35, 47, 85, 0.94), rgba(18, 25, 48, 0.96));
+  border: 1px solid rgba(154, 188, 255, 0.22);
+  font-size: 12px;
+  box-shadow:
+    0 6px 16px rgba(4, 7, 18, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.game-resource span:first-child {
+  font-size: 15px;
+}
+
+.game-resource span:nth-child(2) {
+  color: #93a1c6;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.1px;
+}
+
+.game-resource strong {
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===================================
+   PALCO DO CIENTISTA + STATUS
+=================================== */
+
+.lab-stage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 14px;
+  padding: 6px 12px 2px 6px;
+  border-radius: 22px;
+  background: linear-gradient(155deg, rgba(28, 41, 80, 0.68), rgba(15, 22, 46, 0.82));
+  border: 1px solid rgba(132, 184, 255, 0.18);
+  box-shadow:
+    0 12px 28px rgba(4, 8, 22, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+  contain: layout style;
+}
+
+.lab-scientist {
+  width: 122px;
+  height: 106px;
+  flex-shrink: 0;
+  pointer-events: none;
+  position: relative;
+}
+
+.scientist-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.sci-body {
+  transform-origin: 78px 136px;
+  animation: scientistBreathe 3.2s ease-in-out infinite;
+}
+
+.sci-head {
+  transform-origin: 78px 80px;
+  animation: scientistHeadTilt 4.8s ease-in-out infinite;
+}
+
+.sci-arm-right {
+  transform-origin: 112px 102px;
+  animation: scientistArmStir 2.6s ease-in-out infinite;
+}
+
+.sci-eyes {
+  transform-origin: 78px 55px;
+  animation: scientistBlink 4.6s ease-in-out infinite;
+}
+
+.sci-flask-liquid {
+  animation: flaskLiquidPulse 2.4s ease-in-out infinite;
+}
+
+.sci-bubble {
+  animation: flaskBubble 2.3s ease-in infinite;
+}
+
+.sci-b2 {
+  animation-delay: 0.75s;
+  animation-duration: 2.6s;
+}
+
+.sci-b3 {
+  animation-delay: 1.45s;
+  animation-duration: 2.1s;
 }
 
 .game-status {
-  text-align: center;
-  margin: 20px 0 35px;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding: 6px 2px 10px;
+}
+
+.lab-status-tag {
+  display: inline-block;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  color: #4ce5ff;
+  margin-bottom: 4px;
 }
 
 .game-status h2 {
-  font-size: 25px;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-size: 19px;
+  line-height: 1.15;
   font-weight: 900;
+  letter-spacing: -0.2px;
 }
 
 .game-status p {
-  font-size: 12px;
-  color: #929bb5;
-  margin-top: 7px;
+  font-size: 11.5px;
+  line-height: 1.38;
+  font-weight: 600;
+  color: #a9b8dc;
+  margin-top: 4px;
+}
+
+/* ===================================
+   TABULEIRO E BANCADA 3D DA PARTIDA
+=================================== */
+
+.game-board-stage {
+  position: relative;
+  z-index: 10;
+  padding: 12px 8px 20px;
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(22, 33, 66, 0.45) 0%, rgba(14, 21, 45, 0.85) 100%);
+  border: 1px solid rgba(140, 188, 255, 0.16);
+  box-shadow:
+    0 18px 38px rgba(4, 7, 20, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.lab-workbench {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  height: 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #32467c 0%, #1d294f 65%, #111834 100%);
+  border-top: 1px solid rgba(164, 216, 255, 0.32);
+  box-shadow:
+    0 8px 18px rgba(3, 6, 16, 0.65),
+    0 -4px 16px rgba(56, 200, 255, 0.12);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .game-board {
@@ -113,34 +457,66 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-end;
-  gap: 35px 17px;
-  max-width: 350px;
+  gap: 28px 16px;
+  max-width: 316px;
   margin: 0 auto;
-  padding: 15px 0;
+  padding: 10px 4px 14px;
   overflow: visible;
+  position: relative;
+  z-index: 2;
 }
 
 .game-tube {
-  width: 53px;
-  height: 155px;
-  padding: 5px 4px;
+  width: 54px;
+  height: 148px;
+  padding: 11px 5px 6px;
+  border-radius: 4px 4px 25px 25px;
   cursor: pointer;
   animation: none !important;
-  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  transform-origin: 50% 10%;
+  position: relative;
+  z-index: 1;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.game-tube::before {
+  top: -6px;
+  left: -5px;
+  right: -5px;
+  height: 11px;
+}
+
+.game-tube::after {
+  left: 6px;
+  top: 12px;
+  bottom: 18px;
+  width: 5px;
+}
+
+.game-tube > .liquid:last-child {
+  border-bottom-left-radius: 19px;
+  border-bottom-right-radius: 19px;
 }
 
 .game-tube:hover {
-  border-color: #42c9ff;
+  border-color: rgba(102, 212, 255, 0.78);
 }
 
 .game-tube.selected {
-  transform: translateY(-10px);
-  border-color: #fff;
-  box-shadow: 0 0 18px rgba(66,201,255,.5);
+  transform: translateY(-12px);
+  border-color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 20px 28px rgba(4, 8, 22, 0.65),
+    0 0 24px rgba(56, 200, 255, 0.58),
+    inset 4px 0 8px rgba(255, 255, 255, 0.2),
+    inset -4px 0 8px rgba(6, 11, 26, 0.5);
 }
 
 .game-tube .liquid {
-  height: 25%;
+  height: calc((100% - 3px) / 4);
   min-height: 0;
   animation: none;
 }
@@ -151,99 +527,302 @@
   transform-origin: 50% 12%;
 }
 
-.game-tube.receiving {
-  box-shadow: 0 0 15px rgba(66,201,255,.35);
+.game-tube.pouring-active,
+.game-tube.pouring-source {
+  z-index: 100;
+  transition: none !important;
 }
+
+.game-tube.receiving {
+  border-color: rgba(108, 224, 255, 0.85);
+  box-shadow:
+    0 12px 22px rgba(4, 7, 18, 0.55),
+    0 0 24px rgba(56, 200, 255, 0.52),
+    inset 0 0 12px rgba(56, 200, 255, 0.18);
+}
+
+.pour-fx-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 95;
+  overflow: visible;
+}
+
+.game-tube .liquid.pouring-drain {
+  flex-shrink: 0;
+  min-height: 0;
+}
+
+.game-tube .liquid.pouring-fill {
+  flex-shrink: 0;
+  min-height: 0;
+  overflow: visible;
+  position: relative;
+}
+
+.game-tube .liquid.pouring-fill::before {
+  display: none;
+}
+
+.pour-ripple-wave {
+  position: absolute;
+  top: -3px;
+  left: 3%;
+  right: 3%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.78) 50%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 4;
+}
+
+/* ===================================
+   AÇÕES, SCORE E MENSAGENS
+=================================== */
 
 .game-actions {
   display: flex;
   gap: 12px;
-  margin-top: 35px;
+  margin-top: 20px;
+  position: relative;
+  z-index: 5;
 }
 
 .game-actions button {
   flex: 1;
-  background: #252e49;
-  color: white;
-  padding: 14px 8px;
-  border-radius: 13px;
-  font-size: 12px;
+  background: linear-gradient(160deg, #27345c, #18213d);
+  color: #ffffff;
+  padding: 14px 10px;
+  border-radius: 15px;
+  font-size: 13px;
   font-weight: 900;
-  border: 1px solid #394563;
+  border: 1px solid rgba(154, 188, 255, 0.22);
+  box-shadow:
+    0 4px 0 #0d1326,
+    0 8px 18px rgba(4, 7, 18, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.2s ease;
 }
 
-.game-actions button:active {
-  transform: scale(.97);
+.game-actions button span {
+  color: #ffd24a;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.game-actions button:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #0d1326;
+}
+
+.game-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .game-score {
-  margin-top: 25px;
+  margin-top: 18px;
   text-align: center;
-  color: #929bb5;
+  color: #93a1c6;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 2px;
+  position: relative;
+  z-index: 5;
 }
 
 .game-score strong {
   display: block;
-  color: #ffd34e;
-  font-size: 25px;
-  margin-top: 5px;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  color: #ffd24a;
+  font-size: 26px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+  text-shadow: 0 0 16px rgba(255, 210, 74, 0.3);
 }
 
 .game-message {
   text-align: center;
-  font-size: 12px;
-  color: #42c9ff;
-  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #5cd4ff;
+  margin-top: 12px;
   min-height: 20px;
+  position: relative;
+  z-index: 5;
 }
 
-.result-card {
-  margin-top: 25px;
-  padding: 25px 18px;
-  text-align: center;
-  border-radius: 22px;
-  border: 1px solid #465476;
-  background: linear-gradient(145deg, #293858, #1b233d);
-  animation: entrance .4s ease both;
+/* ===================================
+   MODAL DE RESULTADO (#game-result)
+=================================== */
+
+#game-result {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(5, 8, 22, 0.88);
+  backdrop-filter: blur(12px);
 }
 
-.result-icon {
-  font-size: 42px;
-  margin-bottom: 12px;
+#game-result.active {
+  display: flex;
+  animation: resultBackdrop 0.25s ease;
 }
 
-.result-card h2 {
-  font-size: 21px;
-  font-weight: 900;
-}
-
-.result-card p {
-  color: #aeb8d0;
-  font-size: 13px;
-  margin: 10px 0;
-}
-
-.result-card > strong {
-  display: block;
-  color: #ffd34e;
-  font-size: 20px;
-  margin: 15px 0;
-}
-
-.result-card button {
+#game-result .result-card {
   width: 100%;
-  padding: 16px;
-  border-radius: 13px;
-  background: linear-gradient(100deg, #ff478e, #ff6c70);
-  color: white;
-  font-size: 13px;
+  max-width: 360px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 30px 22px;
+  border-radius: 26px;
+  text-align: center;
+  background: linear-gradient(155deg, #242f54, #141b33);
+  border: 1px solid rgba(112, 198, 255, 0.28);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.6),
+    0 0 36px rgba(56, 200, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  animation: resultAppear 0.4s ease;
+}
+
+#game-result .result-icon {
+  font-size: 56px;
+  margin-bottom: 10px;
+}
+
+#game-result .result-card h2 {
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  color: #ffffff;
+  font-size: 24px;
   font-weight: 900;
+  margin: 8px 0 10px;
+}
+
+#game-result .result-card p {
+  color: #c5d0ea;
+  margin: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#game-result .result-card > strong,
+#game-result .result-card strong {
+  display: block;
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  color: #ffd24a;
+  font-size: 24px;
+  font-weight: 900;
+  margin: 16px 0;
+}
+
+#game-result .result-card button {
+  width: 100%;
+  border: 0;
+  border-radius: 15px;
+  padding: 15px 14px;
+  margin-top: 10px;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ff5d9e 0%, #ff3b7f 100%);
+  font-family: 'Outfit', 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  box-shadow:
+    0 4px 0 #a8154c,
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+#game-result .result-card button:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #a8154c;
+}
+
+#game-result .result-card button.secondary {
+  color: #dce7ff;
+  background: linear-gradient(160deg, #324066, #242e4d);
+  border: 1px solid rgba(154, 188, 255, 0.25);
+  box-shadow:
+    0 4px 0 #13192d,
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+#game-result .result-card button.ad-unavailable {
+  color: #93a1c6;
+  background: #1c243f;
+  border: 1px dashed rgba(154, 188, 255, 0.3);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+#game-result .result-card .result-note {
+  color: #93a1c6;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 12px;
 }
 
 @media (max-width: 360px) {
-  .game-board { gap: 25px 12px; }
-  .game-tube { width: 48px; height: 140px; }
+  .lab-stage {
+    gap: 8px;
+    padding: 4px 10px 2px 4px;
+  }
+
+  .lab-scientist {
+    width: 104px;
+    height: 92px;
+  }
+
+  .game-status h2 {
+    font-size: 17px;
+  }
+
+  .game-status p {
+    font-size: 11px;
+  }
+
+  .game-board {
+    gap: 24px 12px;
+    max-width: 280px;
+  }
+
+  .game-tube {
+    width: 48px;
+    height: 136px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tube,
+  .tube > .liquid:first-child,
+  .play-button,
+  .sci-body,
+  .sci-head,
+  .sci-arm-right,
+  .sci-eyes,
+  .sci-flask-liquid,
+  .sci-bubble {
+    animation: none;
+  }
 }
